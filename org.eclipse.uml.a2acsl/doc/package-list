@@ -1,0 +1,9 @@
+org.eclipse.uml.a2acsl.behavior
+org.eclipse.uml.a2acsl.main
+org.eclipse.uml.a2acsl.ocl2acsl
+org.eclipse.uml.a2acsl.oclcontracts
+org.eclipse.uml.a2acsl.oclgeneration
+org.eclipse.uml.a2acsl.parsing
+org.eclipse.uml.a2acsl.tree
+org.eclipse.uml.a2acsl.utils
+org.eclipse.uml.a2acsl.values
