@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IFile"
+            id="org.eclipse.uml.a2acsl.ui.contribution1">
+         <menu
+               label="Activity2Acsl"
+               path="additions"
+               id="org.eclipse.uml.a2acsl.ui.menu1">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               label="Generate Acsl"
+               class="org.eclipse.uml.a2acsl.ui.popup.actions.GenerateAcslFromActivity"
+               menubarPath="org.eclipse.uml.a2acsl.ui.menu1/group1"
+               enablesFor="1"
+               id="org.eclipse.uml.a2acsl.ui.newAction">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>
