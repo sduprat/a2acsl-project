@@ -119,7 +119,7 @@ public class OclGenerator {
 		return tab + " -> insertAt( " + index + ", " + value + ")";
 	}
 
-	private String generateSetter(String variable, String feature, String value) {
+	private String generateSetter(String variable, String feature, String value, String type) {
 		String setter = "ocl_set(" + variable + ", " + "'" + feature + "'"
 				+ ", " + value + ")";
 		String var = variable.replaceAll(" ", "");
@@ -127,7 +127,7 @@ public class OclGenerator {
 		if (var.contains(at)) {
 			int indAt = var.indexOf(at);
 			String index = var.substring(indAt + 5, var.length() - 1);
-			return generateInsertAt(var.substring(0, indAt), index, setter);
+			return generateInsertAt(var.substring(0, indAt), index, setter + ".oclAsType(" + type + ")");
 		} else {
 			return setter;
 		}
@@ -142,21 +142,25 @@ public class OclGenerator {
 	 * @param value
 	 * @return
 	 */
-	public String generateSetters(String[] parts, String feature, String value) {
+	public String generateSetters(String[] parts, String feature, String value, String[] partsTypes) {
 		int l = parts.length;
 		if (l == 1)
-			return generateSetter(parts[0], feature, value);
+			return generateSetter(parts[0], feature, value, partsTypes[0]);
 		;
 		String var = parts[0];
 		for (int i = 1; i < l; i++) {
 			var += "." + parts[i];
 		}
-		String lastValue = generateSetter(var, feature, value);
+		String lastValue = generateSetter(var, feature, value, partsTypes[0]);
 		String[] newParts = new String[l - 1];
 		for (int i = 0; i < l - 1; i++) {
 			newParts[i] = parts[i];
 		}
-		return generateSetters(newParts, parts[l - 1], lastValue);
+		String[] newPartsTypes = new String[l-1];
+		for (int i = 0; i < l - 1; i++) {
+			newPartsTypes[i] = partsTypes[i];
+		}
+		return generateSetters(newParts, parts[l - 1], lastValue, newPartsTypes);
 	}
 
 	/**

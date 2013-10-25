@@ -2,6 +2,7 @@ package org.eclipse.uml.a2acsl.ocl2acsl;
 
 import java.util.ArrayList;
 
+import org.eclipse.ocl.expressions.IteratorExp;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.ocl.expressions.OperationCallExp;
 import org.eclipse.ocl.expressions.PropertyCallExp;
@@ -197,5 +198,12 @@ public class Ocl2AcslVisitor extends OCLVisitor {
 			}
 		}
 		return super.getSizeParamName(array);
+	}
+	
+	public String visitIteratorExp(IteratorExp<Classifier, Parameter> exp) {
+		if (exp.getName().equals("collect")){
+			return exp.getSource().accept(this);
+		}
+		return super.visitIteratorExp(exp);
 	}
 }

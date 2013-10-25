@@ -22,6 +22,8 @@ import org.eclipse.uml.a2acsl.values.ReturnValue;
 import org.eclipse.uml.a2acsl.values.StringValue;
 import org.eclipse.uml.a2acsl.values.Value;
 import org.eclipse.uml.a2acsl.values.ReturnValue.ReturnType;
+import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
@@ -134,11 +136,11 @@ public class BehaviorOclContractGenerator {
 		if (sourceValue != null) {
 			String source = getValue(sourceValue);
 			String[] sourceParts = source.split("\\.");
-			value = generator.generateSetters(sourceParts, node.getFeature(),
-					value);
 			modifiedvariable = parseSource(sourceParts[0]);
 			TypedElement p = ActivityParser.getElement(modifiedvariable);
 			type = ModelUtils.getType(p);
+			value = generator.generateSetters(sourceParts, node.getFeature(),
+					value, parsePartsTypes(sourceParts, type));
 			isVariable = (p instanceof Variable);
 			String typeName;
 			if (type instanceof SequenceType) {
@@ -173,11 +175,11 @@ public class BehaviorOclContractGenerator {
 			value = generator.generateInsertAt(source + "." + modifiedvariable,
 					node.getIndex(), value);
 			String[] sourceParts = source.split("\\.");
-			value = generator.generateSetters(sourceParts, node.getFeature(),
-					value);
 			modifiedvariable = parseSource(sourceParts[0]);
 			TypedElement p = ActivityParser.getElement(modifiedvariable);
 			type = p.getType();
+			value = generator.generateSetters(sourceParts, node.getFeature(),
+					value, parsePartsTypes(sourceParts, type));
 			isVariable = (p instanceof Variable);
 			String typeName;
 			if (type instanceof SequenceType) {
@@ -202,6 +204,32 @@ public class BehaviorOclContractGenerator {
 			source = var.substring(0, ind);
 		}
 		return source;
+	}
+	
+	private String getTypeName(Type type){
+		if (type instanceof SequenceType) {
+			return ModelUtils.getTypeName(((SequenceType) type)
+					.getElementType());
+		} else {
+			return ModelUtils.getTypeName(type);
+		}
+	}
+	
+	private String[] parsePartsTypes(String[] parts, Type type){
+		String[] types = new String[parts.length];
+		types[0] = getTypeName(type);
+		Classifier current = (Classifier) type;
+		for (int i=1; i<parts.length;i++){
+			String part = parseSource(parts[i]);
+			for (Property p : current.getAllAttributes()){
+				if (p.getName().equals(part)) {
+					current = (Classifier) p.getType();
+					types[i] = getTypeName(current);
+				}
+			}
+			if (current instanceof SequenceType) current = ((SequenceType) current).getElementType();
+		}
+		return types;
 	}
 
 	// Handles a node that changes the value of a local variable by updating the
