@@ -1,15 +1,15 @@
 #include <module.h>
-#include <actions.h>
 
 int doActions(N_Action action, int it){
 	switch (action){
+	int res;
+	int* y;
+	int* z;
 	case A1 :
-		int res = action1();
+		res = action1();
 		state.id = state.id + 1;
 		return res;
 	case A2 :
-		int* y;
-		int* z;
 		*z = 0;
 		action2(it, y, z);
 		if (*y==0) {
@@ -25,6 +25,8 @@ int doActions(N_Action action, int it){
 			init();
 			return action1();
 		}
+	default :
+		return -1;
 	}
 }
 
