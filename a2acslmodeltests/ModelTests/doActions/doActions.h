@@ -11,16 +11,16 @@ behavior B1:
 	requires size_doActions_action2_context == 0;
 	ensures doActions_action2_context[0]._in.z == 0;
 	ensures doActions_action2_context[0]._in.x == it;
-	ensures \let z_1_B1=doActions_action2_context[0]._out.z;\let states_1_B1=IteratorExp;\result == (states_1_B1[0]).id;
-	ensures \let z_1_B1=doActions_action2_context[0]._out.z;\let states_1_B1=IteratorExp;states == states_1_B1;
+	ensures \let z_1_B1=doActions_action2_context[0]._out.z;\let states_1_B1={\old(states) \with [z_1_B1] = (State) ({ \old(states[z_1_B1]) \with .id = (int)(0)} ) };\result == (states_1_B1[0]).id;
+	ensures \let z_1_B1=doActions_action2_context[0]._out.z;\let states_1_B1={\old(states) \with [z_1_B1] = (State) ({ \old(states[z_1_B1]) \with .id = (int)(0)} ) };states == states_1_B1;
 behavior B2:
 	assumes action == A2;
 	assumes \let y_1_B2=doActions_action2_context[0]._out.y;y_1_B2 != 0;
 	requires size_doActions_action2_context == 0;
 	ensures doActions_action2_context[0]._in.z == 0;
 	ensures doActions_action2_context[0]._in.x == it;
-	ensures \let y_1_B2=doActions_action2_context[0]._out.y;\let z_1_B2=doActions_action2_context[0]._out.z;\let states_1_B2=IteratorExp;\result == (states_1_B2[0]).id;
-	ensures \let y_1_B2=doActions_action2_context[0]._out.y;\let z_1_B2=doActions_action2_context[0]._out.z;\let states_1_B2=IteratorExp;states == states_1_B2;
+	ensures \let y_1_B2=doActions_action2_context[0]._out.y;\let z_1_B2=doActions_action2_context[0]._out.z;\let states_1_B2={\old(states) \with [y_1_B2] = (State) ({ \old(states[y_1_B2]) \with .id = (int)(z_1_B2)} ) };\result == (states_1_B2[0]).id;
+	ensures \let y_1_B2=doActions_action2_context[0]._out.y;\let z_1_B2=doActions_action2_context[0]._out.z;\let states_1_B2={\old(states) \with [y_1_B2] = (State) ({ \old(states[y_1_B2]) \with .id = (int)(z_1_B2)} ) };states == states_1_B2;
 behavior B3:
 	assumes status == 0 && action == A3;
 	requires size_doActions_action3_context == 0;
