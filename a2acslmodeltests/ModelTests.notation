@@ -87,7 +87,7 @@
         <styles xmi:type="notation:FilteringStyle" xmi:id="_w1Y0_j1YEeOf-PpITrJ1HA"/>
       </children>
       <element xmi:type="uml:Class" href="ModelTests.uml#_w1TVYD1YEeOf-PpITrJ1HA"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_w1WYsT1YEeOf-PpITrJ1HA" x="10" y="10" width="371" height="146"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_w1WYsT1YEeOf-PpITrJ1HA" x="10" y="10" width="406" height="146"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_0As6YD1YEeOf-PpITrJ1HA" type="shape_uml_enumeration_as_classifier" fontName="Segoe UI" lineColor="0">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_0AuIgD1YEeOf-PpITrJ1HA" source="ShadowFigure">
@@ -122,7 +122,7 @@
         <styles xmi:type="notation:FilteringStyle" xmi:id="_0AthdT1YEeOf-PpITrJ1HA"/>
       </children>
       <element xmi:type="uml:Enumeration" href="ModelTests.uml#_0ArsQD1YEeOf-PpITrJ1HA"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0As6YT1YEeOf-PpITrJ1HA" x="115" y="165" width="66"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0As6YT1YEeOf-PpITrJ1HA" x="115" y="165" width="96"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_7LqFMD1YEeOf-PpITrJ1HA" type="shape_uml_datatype_as_classifier" fontName="Segoe UI" lineColor="0">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_7LrTUD1YEeOf-PpITrJ1HA" source="ShadowFigure">
@@ -241,7 +241,7 @@
         <styles xmi:type="notation:FilteringStyle" xmi:id="_Yu3EaT1ZEeOf-PpITrJ1HA"/>
       </children>
       <element xmi:type="uml:Class" href="ModelTests.uml#_Yuxk0D1ZEeOf-PpITrJ1HA"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Yu0BET1ZEeOf-PpITrJ1HA" x="410" y="10" width="376" height="166"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Yu0BET1ZEeOf-PpITrJ1HA" x="235" y="170" width="376" height="166"/>
     </children>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_v-0ZUT1YEeOf-PpITrJ1HA"/>
     <element xmi:type="uml:Model" href="ModelTests.uml#_mdAr4D1YEeOf-PpITrJ1HA"/>
@@ -952,7 +952,7 @@
             <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ujLZbT1mEeOf-PpITrJ1HA" source="QualifiedName">
               <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ujLZbj1mEeOf-PpITrJ1HA" key="QualifiedNameDepth" value="1000"/>
             </eAnnotations>
-            <children xmi:type="notation:DecorationNode" xmi:id="_ujLZbz1mEeOf-PpITrJ1HA" type="5020">
+            <children xmi:type="notation:DecorationNode" xmi:id="_ujLZbz1mEeOf-PpITrJ1HA" visible="false" type="5020">
               <layoutConstraint xmi:type="notation:Location" xmi:id="_ujLZcD1mEeOf-PpITrJ1HA" y="5"/>
             </children>
             <children xmi:type="notation:DecorationNode" xmi:id="_ujLZcT1mEeOf-PpITrJ1HA" type="5094">
@@ -1097,7 +1097,7 @@
         <children xmi:type="notation:DecorationNode" xmi:id="_IMwHhj1aEeOf-PpITrJ1HA" type="5071"/>
         <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_IMvgcj1aEeOf-PpITrJ1HA"/>
         <element xmi:type="uml:ActivityParameterNode" href="ModelTests.uml#_IMu5YD1aEeOf-PpITrJ1HA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IMvgcz1aEeOf-PpITrJ1HA" x="-20" y="200"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IMvgcz1aEeOf-PpITrJ1HA" x="-20" y="210"/>
       </children>
       <children xmi:type="notation:Shape" xmi:id="_K1JtIT1aEeOf-PpITrJ1HA" type="3059" fontName="Segoe UI" lineColor="0">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_K1KUMD1aEeOf-PpITrJ1HA" source="ShadowFigure">
