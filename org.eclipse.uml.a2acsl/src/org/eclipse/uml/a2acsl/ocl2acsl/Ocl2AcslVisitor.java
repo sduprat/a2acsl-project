@@ -199,9 +199,9 @@ public class Ocl2AcslVisitor extends OCLVisitor {
 		}
 		return super.getSizeParamName(array);
 	}
-	
+
 	public String visitIteratorExp(IteratorExp<Classifier, Parameter> exp) {
-		if (exp.getName().equals("collect")){
+		if (exp.getName().equals("collect")) {
 			return exp.getSource().accept(this);
 		}
 		return super.visitIteratorExp(exp);

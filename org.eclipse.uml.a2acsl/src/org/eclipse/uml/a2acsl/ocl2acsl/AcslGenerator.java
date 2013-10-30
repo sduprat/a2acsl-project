@@ -2,6 +2,7 @@ package org.eclipse.uml.a2acsl.ocl2acsl;
 
 import java.util.ArrayList;
 
+import org.eclipse.ocl.ParserException;
 import org.eclipse.uml.a2acsl.oclcontracts.GlobalOclContract;
 import org.eclipse.uml.a2acsl.oclcontracts.OclContract;
 import org.eclipse.uml2.uml.Activity;
@@ -22,9 +23,11 @@ public class AcslGenerator {
 	 * @param activity
 	 * @param calledOperations
 	 * @return
+	 * @throws ParserException
 	 */
 	public String generateFunctionContract(GlobalOclContract contract,
-			Activity activity, ArrayList<Operation> calledOperations) {
+			Activity activity, ArrayList<Operation> calledOperations)
+			throws ParserException {
 		String result = "";
 		ArrayList<OclContract> behaviors = contract.getBehaviors();
 		result += "/* ========== Function Contract ========== */\n/*@\n";
@@ -42,8 +45,10 @@ public class AcslGenerator {
 	 * @param contract
 	 * @param caller
 	 * @return
+	 * @throws ParserException
 	 */
-	public String generateStubs(GlobalOclContract contract, Operation caller) {
+	public String generateStubs(GlobalOclContract contract, Operation caller)
+			throws ParserException {
 		String result = "";
 		ArrayList<OclContract> stubs = contract.getStubs();
 		for (OclContract stub : stubs) {
@@ -75,12 +80,14 @@ public class AcslGenerator {
 		return result;
 	}
 
-	protected String translateStubAnnotations(OclContract stub) {
+	protected String translateStubAnnotations(OclContract stub)
+			throws ParserException {
 		String stubAcsl = oclContractToACSL(stub);
 		return "/*@\n" + stubAcsl + "*/";
 	}
 
-	protected String oclContractToACSL(OclContract contract) {
+	protected String oclContractToACSL(OclContract contract)
+			throws ParserException {
 		String name = contract.getName();
 		String result = name.isEmpty() ? "" : "behavior " + name + ":\n";
 		if (contract.getAssigns().size() != 0) {

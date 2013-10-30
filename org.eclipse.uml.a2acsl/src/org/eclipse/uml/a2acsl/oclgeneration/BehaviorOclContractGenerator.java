@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.uml.SequenceType;
 import org.eclipse.uml.a2acsl.behavior.Behavior;
 import org.eclipse.uml.a2acsl.behavior.CallNode;
@@ -69,9 +70,10 @@ public class BehaviorOclContractGenerator {
 	 * @param behavior
 	 * @param context
 	 * @return
+	 * @throws ParserException
 	 */
 	public OclContract generateBehaviorOCLContract(Behavior behavior,
-			Operation context) {
+			Operation context) throws ParserException {
 		initialize(behavior, context);
 		for (Node node : behavior.getNodes()) {
 			generatePartialOCLContract(node);
@@ -96,7 +98,7 @@ public class BehaviorOclContractGenerator {
 	}
 
 	// Updates contract with constraints induced by given node
-	private void generatePartialOCLContract(Node node) {
+	private void generatePartialOCLContract(Node node) throws ParserException {
 		String guard = node.getGuard();
 		if (!guard.equals("true")) {
 			guard = OclReplacer.updateVariablesInConstraint(guard);
@@ -126,7 +128,8 @@ public class BehaviorOclContractGenerator {
 	// x's
 	// observer with : x_3 = x_2 -> insertAt(i,ocl_set(x_2->at(i),'y',0))
 	// The new definition of x_3 is kept in definitions
-	private void handleWriteFeatureNode(WriteFeatureNode node) {
+	private void handleWriteFeatureNode(WriteFeatureNode node)
+			throws ParserException {
 		boolean isVariable = false;
 		String modifiedvariable = node.getFeature();
 		Type type = node.getType();
@@ -160,7 +163,7 @@ public class BehaviorOclContractGenerator {
 	// observer with the value :
 	// y_3 = ocl_set(y,'z',y.z->insertAt(i,0)).oclAsType(type_of_y)
 	private void handleWriteCollectionItemFeatureNode(
-			WriteCollectionItemFeatureNode node) {
+			WriteCollectionItemFeatureNode node) throws ParserException {
 		boolean isVariable = false;
 		String modifiedvariable = node.getFeature();
 		Type type = node.getType();
@@ -204,8 +207,8 @@ public class BehaviorOclContractGenerator {
 		}
 		return source;
 	}
-	
-	private String getTypeName(Type type){
+
+	private String getTypeName(Type type) {
 		if (type instanceof SequenceType) {
 			return ModelUtils.getTypeName(((SequenceType) type)
 					.getElementType());
@@ -213,27 +216,29 @@ public class BehaviorOclContractGenerator {
 			return ModelUtils.getTypeName(type);
 		}
 	}
-	
-	private String[] parsePartsTypes(String[] parts, Type type){
+
+	private String[] parsePartsTypes(String[] parts, Type type) {
 		String[] types = new String[parts.length];
 		types[0] = getTypeName(type);
 		Classifier current = (Classifier) type;
-		for (int i=1; i<parts.length;i++){
+		for (int i = 1; i < parts.length; i++) {
 			String part = parseSource(parts[i]);
-			for (Property p : current.getAllAttributes()){
+			for (Property p : current.getAllAttributes()) {
 				if (p.getName().equals(part)) {
 					current = (Classifier) p.getType();
 					types[i] = getTypeName(current);
 				}
 			}
-			if (current instanceof SequenceType) current = ((SequenceType) current).getElementType();
+			if (current instanceof SequenceType)
+				current = ((SequenceType) current).getElementType();
 		}
 		return types;
 	}
 
 	// Handles a node that changes the value of a local variable by updating the
 	// corresponding observer with the new value
-	private void handleWriteVariableNode(WriteVariableNode node) {
+	private void handleWriteVariableNode(WriteVariableNode node)
+			throws ParserException {
 		String variable = node.getVariable();
 		Type type = node.getType();
 		String value = getValue(node.getValue());
@@ -244,7 +249,7 @@ public class BehaviorOclContractGenerator {
 	// Handles a node that changes the value of an item of a local variable by
 	// updating the corresponding observer with the new value
 	private void handleWriteCollectionItemVariableNode(
-			WriteCollectionItemVariableNode node) {
+			WriteCollectionItemVariableNode node) throws ParserException {
 		String variable = node.getVariable();
 		Type type = node.getType();
 		Value nodeValue = node.getValue();
@@ -256,7 +261,7 @@ public class BehaviorOclContractGenerator {
 
 	// Handles a call node by adding the necessary clauses to the contract and
 	// updating properties observers if operation has side effects
-	protected void handleCallNode(CallNode node) {
+	protected void handleCallNode(CallNode node) throws ParserException {
 		Operation contextOp = contract.getContext();
 		String contextName = contextOp.getName();
 		String opOwner = node.getOwner();
@@ -291,7 +296,8 @@ public class BehaviorOclContractGenerator {
 	}
 
 	// Handles a node that sets an activity parameter
-	private void handleParameterValueNode(ParameterValueNode node) {
+	private void handleParameterValueNode(ParameterValueNode node)
+			throws ParserException {
 		String value = getValue(node.getValue());
 		value = OclReplacer.updateVariablesInExpression(value);
 		String postcondition = generator.generateEquality(node.getParameter(),

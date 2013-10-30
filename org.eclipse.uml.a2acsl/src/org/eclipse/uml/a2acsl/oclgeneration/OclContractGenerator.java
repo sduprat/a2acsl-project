@@ -2,6 +2,7 @@ package org.eclipse.uml.a2acsl.oclgeneration;
 
 import java.util.ArrayList;
 
+import org.eclipse.ocl.ParserException;
 import org.eclipse.uml.a2acsl.behavior.Behavior;
 import org.eclipse.uml.a2acsl.behavior.CallNode;
 import org.eclipse.uml.a2acsl.behavior.Node;
@@ -54,10 +55,12 @@ public class OclContractGenerator {
 	 * @param behaviors
 	 * @param context
 	 * @return
+	 * @throws ParserException
 	 */
 	public static GlobalOclContract generateFunctionOclContract(
 			ArrayList<Operation> calledOperations,
-			ArrayList<Behavior> behaviors, Operation context) {
+			ArrayList<Behavior> behaviors, Operation context)
+			throws ParserException {
 		GlobalOclContract globalContrat = new GlobalOclContract();
 		for (Behavior behavior : behaviors) {
 			behaviorGenerator.initializeGen(generator);

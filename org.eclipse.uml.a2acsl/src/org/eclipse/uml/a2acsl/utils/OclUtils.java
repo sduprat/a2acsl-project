@@ -52,17 +52,10 @@ public class OclUtils {
 	 * @return
 	 */
 	public static OCLExpression<Classifier> generateOCLExpression(
-			String stringExp) {
-		try {
-			stringExp = stringExp.replaceAll("@pre", "");
-			OCLExpression<Classifier> expression = helper
-					.createQuery(stringExp);
-			return expression;
-		} catch (ParserException e) {
-			System.out.println(stringExp);
-			e.printStackTrace();
-		}
-		return null;
+			String stringExp) throws ParserException {
+		stringExp = stringExp.replaceAll("@pre", "");
+		OCLExpression<Classifier> expression = helper.createQuery(stringExp);
+		return expression;
 	}
 
 	/**
@@ -74,17 +67,11 @@ public class OclUtils {
 	 * @return
 	 */
 	public static OCLExpression<Classifier> generateOCLConstraint(
-			String stringSpec) {
-		try {
-			Constraint constraint = helper.createPostcondition(stringSpec);
-			OCLExpression<Classifier> consSpec = ((ExpressionInOCL) constraint
-					.getSpecification()).getBodyExpression();
-			return consSpec;
-		} catch (ParserException e) {
-			System.out.println(stringSpec);
-			e.printStackTrace();
-		}
-		return null;
+			String stringSpec) throws ParserException {
+		Constraint constraint = helper.createPostcondition(stringSpec);
+		OCLExpression<Classifier> consSpec = ((ExpressionInOCL) constraint
+				.getSpecification()).getBodyExpression();
+		return consSpec;
 	}
 
 	/**

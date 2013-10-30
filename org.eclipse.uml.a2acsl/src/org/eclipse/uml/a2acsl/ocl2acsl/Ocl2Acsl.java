@@ -1,5 +1,6 @@
 package org.eclipse.uml.a2acsl.ocl2acsl;
 
+import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.uml.a2acsl.oclgeneration.OclContractGenerator;
 import org.eclipse.uml.a2acsl.utils.OclUtils;
@@ -33,9 +34,10 @@ public class Ocl2Acsl {
 	 * @param context
 	 * @param inPreState
 	 * @return
+	 * @throws ParserException
 	 */
 	public static String oclConstraint2acsl(String oclConstraint,
-			Operation context, boolean inPreState) {
+			Operation context, boolean inPreState) throws ParserException {
 		Ocl2Acsl.context = context;
 		OclUtils.setOperationContext(context);
 		OclUtils.setEnvironment(OclContractGenerator.getBehaviorGenerator()
@@ -54,9 +56,10 @@ public class Ocl2Acsl {
 	 * @param context
 	 * @param inPreState
 	 * @return
+	 * @throws ParserException
 	 */
 	public static String oclExpression2acsl(String oclExpression,
-			Operation context, boolean inPreState) {
+			Operation context, boolean inPreState) throws ParserException {
 		Ocl2Acsl.context = context;
 		OclUtils.setOperationContext(context);
 		OclUtils.setEnvironment(OclContractGenerator.getBehaviorGenerator()

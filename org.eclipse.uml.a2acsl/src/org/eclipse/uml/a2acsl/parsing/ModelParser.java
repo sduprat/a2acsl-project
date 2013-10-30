@@ -1,13 +1,10 @@
 package org.eclipse.uml.a2acsl.parsing;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.papyrus.sysml.activities.ActivitiesPackage;
@@ -86,29 +83,6 @@ public class ModelParser {
 			} else if (object instanceof Operation) {
 				operations.add((Operation) object);
 			}
-		}
-	}
-
-	/**
-	 * Saves the specified model
-	 * 
-	 * @param model
-	 * @param path
-	 */
-	public static void saveModel(Model model, String path) {
-		File file = new File(path);
-		File parent = file.getParentFile();
-		if (!parent.exists()) {
-			parent.mkdirs();
-		}
-		file.delete();
-		Resource resource = model.eResource();
-		URI modelURI = URI.createFileURI(file.getAbsolutePath());
-		resource.setURI(modelURI);
-		try {
-			resource.save(null);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 

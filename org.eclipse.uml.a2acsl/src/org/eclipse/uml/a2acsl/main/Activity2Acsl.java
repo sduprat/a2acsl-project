@@ -2,8 +2,10 @@ package org.eclipse.uml.a2acsl.main;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -32,60 +34,70 @@ import org.eclipse.uml2.uml.Operation;
  */
 public class Activity2Acsl {
 
-	public static void generateACSLContracts(String modelPath){
+	public static void generateACSLContracts(File modelFile) {
 		// Initialization
-		String filePath;
-		String genPath = modelPath.substring(0, modelPath.length() - 4) + "\\";
-		OclGenerator generator = new OclGenerator();
-		BehaviorOclContractGenerator behaviorGenerator = new BehaviorOclContractGenerator();
-		StubOclContractGenerator stubGenerator = new StubOclContractGenerator();
-		OclContractGenerator.initialize(generator, behaviorGenerator,
-				stubGenerator);
-		AcslGenerator acslGenerator = new AcslGenerator();
-		Ocl2Acsl.initialize(new Ocl2AcslVisitor());
-		// Model parsing
-		ModelParser.parseModel(modelPath);
-		Model model = ModelParser.getModel();
-		for (Activity a : ModelParser.getActivities()) {
-			Operation op = (Operation) a.getSpecification();
-			org.eclipse.uml2.uml.Class module = op.getClass_();
-			OclContractGenerator.prepareModel(model, module);
-			// Activity parsing
-			ActivityParser.parseActivity(a, new NodeParser());
-			ArrayList<Operation> calledOperations = ActivityParser
-					.getCalledOperations();
-			ArrayList<Behavior> behaviors = ActivityParser.getListBehaviors();
-			// Model completion with observers
-			OclContractGenerator.addObserversToModel(model, op,
-					calledOperations);
-			// OCL contract generation
-			GlobalOclContract globalContract = OclContractGenerator
-					.generateFunctionOclContract(calledOperations, behaviors,
-							op);
-			// OCL stub contracts generation
-			OclContractGenerator.generateStubContracts(calledOperations,
-					globalContract, op);
-			String ocl = globalContract.toString();
-			// Translation of OCL contract to ACSL
-			String acsl = acslGenerator.generateFunctionContract(
-					globalContract, a, calledOperations);
-			// Stub generation
-			String stubs = acslGenerator.generateStubs(globalContract, op);
-			String name = a.getName();
-			filePath = genPath + name + "\\";
-			// Files generation
-			writeToFile(stubs, filePath + name + "_stubs.h");
-			writeToFile(ocl, filePath + name + ".ocl");
-			writeToFile(acsl, filePath + name + ".h");
-		}
+		String modelName = modelFile.getName().split("\\.")[0];
+		String modelPathParent = modelFile.getParent();
+		String genPath = modelPathParent + "\\" + modelName + "\\";
+		String modelPath = modelFile.getPath();
+		try {
+			OclGenerator generator = new OclGenerator();
+			BehaviorOclContractGenerator behaviorGenerator = new BehaviorOclContractGenerator();
+			StubOclContractGenerator stubGenerator = new StubOclContractGenerator();
+			OclContractGenerator.initialize(generator, behaviorGenerator,
+					stubGenerator);
+			AcslGenerator acslGenerator = new AcslGenerator();
+			Ocl2Acsl.initialize(new Ocl2AcslVisitor());
+			// Model parsing
+			ModelParser.parseModel(modelPath);
+			Model model = ModelParser.getModel();
+			for (Activity a : ModelParser.getActivities()) {
+				Operation op = (Operation) a.getSpecification();
+				org.eclipse.uml2.uml.Class module = op.getClass_();
+				OclContractGenerator.prepareModel(model, module);
+				// Activity parsing
+				ActivityParser.parseActivity(a, new NodeParser());
+				ArrayList<Operation> calledOperations = ActivityParser
+						.getCalledOperations();
+				ArrayList<Behavior> behaviors = ActivityParser
+						.getListBehaviors();
+				// Model completion with observers
+				OclContractGenerator.addObserversToModel(model, op,
+						calledOperations);
+				// OCL contract generation
+				GlobalOclContract globalContract = OclContractGenerator
+						.generateFunctionOclContract(calledOperations,
+								behaviors, op);
+				// OCL stub contracts generation
+				OclContractGenerator.generateStubContracts(calledOperations,
+						globalContract, op);
+				String ocl = globalContract.toString();
+				// Translation of OCL contract to ACSL
+				String acsl = acslGenerator.generateFunctionContract(
+						globalContract, a, calledOperations);
+				// Stub generation
+				String stubs = acslGenerator.generateStubs(globalContract, op);
+				String name = a.getName();
+				String filePath = genPath + name + "\\";
+				// Files generation
+				writeToFile(stubs, filePath + name + "_stubs.h");
+				writeToFile(ocl, filePath + name + ".ocl");
+				writeToFile(acsl, filePath + name + ".h");
+			}
+		} catch (Exception e) {
+			File errorFile = new File(modelPathParent + "\\error.log");
+			try {
+				PrintStream ps = new PrintStream(errorFile);
+				e.printStackTrace(ps);
+			} catch (FileNotFoundException e1) {
+				writeToFile(e1.getMessage(), modelPathParent + "\\error.log");
+			}
 
-		// Debug : Saving modified model
-		ModelParser.saveModel(ModelParser.getModel(), genPath
-				+ "modifiedModel.uml");
+		}
 	}
 
 	// Writes content to provided path
-	private static void writeToFile(String content, String filePath){
+	private static void writeToFile(String content, String filePath) {
 		File file = new File(filePath);
 		File parent = file.getParentFile();
 		if (!parent.exists()) {
@@ -93,8 +105,8 @@ public class Activity2Acsl {
 		}
 		file.delete();
 		try {
-			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(
-					filePath, true)));
+			PrintWriter out = new PrintWriter(new BufferedWriter(
+					new FileWriter(filePath, true)));
 			out.println(content);
 			out.close();
 		} catch (IOException e) {
@@ -104,9 +116,10 @@ public class Activity2Acsl {
 	}
 
 	// Debug, first argument : Path to uml model
-	public static void main(String[] args) {
-			Activity2Acsl
-					.generateACSLContracts(args[0]);
+	public static void main(String args[]) {
+		Activity2Acsl
+				.generateACSLContracts(new File(
+						"D:\\documents\\A560169\\workspace\\a2acslmodeltests\\ModelTests.uml"));
 	}
 
 }

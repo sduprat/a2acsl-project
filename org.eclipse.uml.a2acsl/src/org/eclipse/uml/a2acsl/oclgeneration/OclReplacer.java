@@ -2,6 +2,7 @@ package org.eclipse.uml.a2acsl.oclgeneration;
 
 import java.util.HashMap;
 
+import org.eclipse.ocl.ParserException;
 import org.eclipse.ocl.expressions.OCLExpression;
 import org.eclipse.uml.a2acsl.utils.OclUtils;
 import org.eclipse.uml2.uml.Classifier;
@@ -21,8 +22,10 @@ class OclReplacer {
 	 * 
 	 * @param constraint
 	 * @return
+	 * @throws ParserException
 	 */
-	public static String updateVariablesInConstraint(String constraint) {
+	public static String updateVariablesInConstraint(String constraint)
+			throws ParserException {
 		HashMap<String, VariableObserver> features = OclContractGenerator
 				.getBehaviorGenerator().getVariablesObservers();
 		Operation context = OclContractGenerator.getBehaviorGenerator()
@@ -41,8 +44,10 @@ class OclReplacer {
 	 * 
 	 * @param expression
 	 * @return
+	 * @throws ParserException
 	 */
-	public static String updateVariablesInExpression(String expression) {
+	public static String updateVariablesInExpression(String expression)
+			throws ParserException {
 		HashMap<String, VariableObserver> features = OclContractGenerator
 				.getBehaviorGenerator().getVariablesObservers();
 		Operation context = OclContractGenerator.getBehaviorGenerator()
