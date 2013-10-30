@@ -45,8 +45,7 @@ public class GenerateAcslFromActivity implements IObjectActionDelegate {
 				try {
 					file = getFile();
 					IPath path = file.getRawLocation().makeAbsolute();
-					final String modelPath = path.toFile().getAbsolutePath();
-					Activity2Acsl.generateACSLContracts(modelPath);
+					Activity2Acsl.generateACSLContracts(path.toFile());
 				} catch (Exception e) {
 					IStatus status = new Status(IStatus.ERROR,
 							Activator.PLUGIN_ID, e.getMessage(), e);
