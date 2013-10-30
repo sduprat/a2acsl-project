@@ -12,8 +12,9 @@ import org.eclipse.uml2.uml.Parameter;
 
 /**
  * Extends OCL operations by adding a setter operation. Used by A2Acsl.
+ * 
  * @author A560169
- *
+ * 
  */
 public class Setter implements CustomOperation {
 
