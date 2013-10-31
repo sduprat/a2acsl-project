@@ -49,15 +49,16 @@ public class GenerateAcslFromActivity implements IObjectActionDelegate {
 				} catch (Exception e) {
 					IStatus status = new Status(IStatus.ERROR,
 							Activator.PLUGIN_ID, e.getMessage(), e);
-					Activator.getDefault().getLog().log(status);
+					Activator.getLogger().log(status);
 				} finally {
 					try {
 						file.getProject().refreshLocal(
 								IResource.DEPTH_INFINITE, monitor);
+						monitor.done();
 					} catch (CoreException e) {
 						IStatus status = new Status(IStatus.ERROR,
 								Activator.PLUGIN_ID, e.getMessage(), e);
-						Activator.getDefault().getLog().log(status);
+						Activator.getLogger().log(status);
 					}
 				}
 			}
@@ -68,7 +69,7 @@ public class GenerateAcslFromActivity implements IObjectActionDelegate {
 		} catch (Exception e) {
 			IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
 					e.getMessage(), e);
-			Activator.getDefault().getLog().log(status);
+			Activator.getLogger().log(status);
 		}
 	}
 
