@@ -31,7 +31,7 @@ public class ModelParser {
 
 	private static URI PLUGIN_PATH = URI
 			.createURI("jar:file:/D:/Topcased-5.3.1/plugins/org.eclipse.uml2.uml.resources_3.1.100.v201008191510.jar!/libraries/");
-	private static ResourceSet resourceSet = new ResourceSetImpl();
+	private static ResourceSet resourceSet;
 
 	private static ArrayList<Activity> activities;
 	private static ArrayList<Operation> operations;
@@ -39,6 +39,7 @@ public class ModelParser {
 
 	private static void initialize() {
 
+		resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
 				.put(UMLResource.FILE_EXTENSION, UMLResource.Factory.INSTANCE);
 		resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI,

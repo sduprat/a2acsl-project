@@ -2,13 +2,12 @@ package org.eclipse.uml.a2acsl.main;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import org.eclipse.ocl.ParserException;
 import org.eclipse.uml.a2acsl.behavior.Behavior;
 import org.eclipse.uml.a2acsl.ocl2acsl.AcslGenerator;
 import org.eclipse.uml.a2acsl.ocl2acsl.Ocl2Acsl;
@@ -34,13 +33,12 @@ import org.eclipse.uml2.uml.Operation;
  */
 public class Activity2Acsl {
 
-	public static void generateACSLContracts(File modelFile) {
+	public static void generateACSLContracts(File modelFile) throws ParserException {
 		// Initialization
 		String modelName = modelFile.getName().split("\\.")[0];
 		String modelPathParent = modelFile.getParent();
 		String genPath = modelPathParent + "\\" + modelName + "\\";
 		String modelPath = modelFile.getPath();
-		try {
 			OclGenerator generator = new OclGenerator();
 			BehaviorOclContractGenerator behaviorGenerator = new BehaviorOclContractGenerator();
 			StubOclContractGenerator stubGenerator = new StubOclContractGenerator();
@@ -84,16 +82,6 @@ public class Activity2Acsl {
 				writeToFile(ocl, filePath + name + ".ocl");
 				writeToFile(acsl, filePath + name + ".h");
 			}
-		} catch (Exception e) {
-			File errorFile = new File(modelPathParent + "\\error.log");
-			try {
-				PrintStream ps = new PrintStream(errorFile);
-				e.printStackTrace(ps);
-			} catch (FileNotFoundException e1) {
-				writeToFile(e1.getMessage(), modelPathParent + "\\error.log");
-			}
-
-		}
 	}
 
 	// Writes content to provided path
@@ -104,22 +92,18 @@ public class Activity2Acsl {
 			parent.mkdirs();
 		}
 		file.delete();
+		PrintWriter out = null;
 		try {
-			PrintWriter out = new PrintWriter(new BufferedWriter(
+			out = new PrintWriter(new BufferedWriter(
 					new FileWriter(filePath, true)));
 			out.println(content);
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			if (out != null) {
+				out.close();
+			}
 		}
-
 	}
-
-	// Debug, first argument : Path to uml model
-	public static void main(String args[]) {
-		Activity2Acsl
-				.generateACSLContracts(new File(
-						"D:\\documents\\A560169\\workspace\\a2acslmodeltests\\ModelTests.uml"));
-	}
-
 }

@@ -251,7 +251,7 @@ public class NodeParser {
 					sFeature.getType()) == null) {
 				value = new StringValue(
 						((NamedElement) sFeature.getOwner()).getName());
-				staticAccess = true;
+				staticAccess = ((ReadStructuralFeatureAction) node).getStructuralFeature().isStatic();
 			}
 			String index = "-1";
 			EList<Constraint> pres = ((ReadStructuralFeatureAction) node)
