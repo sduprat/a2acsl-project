@@ -33,55 +33,55 @@ import org.eclipse.uml2.uml.Operation;
  */
 public class Activity2Acsl {
 
-	public static void generateACSLContracts(File modelFile) throws ParserException {
+	public static void generateACSLContracts(File modelFile)
+			throws ParserException {
 		// Initialization
 		String modelName = modelFile.getName().split("\\.")[0];
 		String modelPathParent = modelFile.getParent();
 		String genPath = modelPathParent + "\\" + modelName + "\\";
 		String modelPath = modelFile.getPath();
-			OclGenerator generator = new OclGenerator();
-			BehaviorOclContractGenerator behaviorGenerator = new BehaviorOclContractGenerator();
-			StubOclContractGenerator stubGenerator = new StubOclContractGenerator();
-			OclContractGenerator.initialize(generator, behaviorGenerator,
-					stubGenerator);
-			AcslGenerator acslGenerator = new AcslGenerator();
-			Ocl2Acsl.initialize(new Ocl2AcslVisitor());
-			// Model parsing
-			ModelParser.parseModel(modelPath);
-			Model model = ModelParser.getModel();
-			for (Activity a : ModelParser.getActivities()) {
-				Operation op = (Operation) a.getSpecification();
-				org.eclipse.uml2.uml.Class module = op.getClass_();
-				OclContractGenerator.prepareModel(model, module);
-				// Activity parsing
-				ActivityParser.parseActivity(a, new NodeParser());
-				ArrayList<Operation> calledOperations = ActivityParser
-						.getCalledOperations();
-				ArrayList<Behavior> behaviors = ActivityParser
-						.getListBehaviors();
-				// Model completion with observers
-				OclContractGenerator.addObserversToModel(model, op,
-						calledOperations);
-				// OCL contract generation
-				GlobalOclContract globalContract = OclContractGenerator
-						.generateFunctionOclContract(calledOperations,
-								behaviors, op);
-				// OCL stub contracts generation
-				OclContractGenerator.generateStubContracts(calledOperations,
-						globalContract, op);
-				String ocl = globalContract.toString();
-				// Translation of OCL contract to ACSL
-				String acsl = acslGenerator.generateFunctionContract(
-						globalContract, a, calledOperations);
-				// Stub generation
-				String stubs = acslGenerator.generateStubs(globalContract, op);
-				String name = a.getName();
-				String filePath = genPath + name + "\\";
-				// Files generation
-				writeToFile(stubs, filePath + name + "_stubs.h");
-				writeToFile(ocl, filePath + name + ".ocl");
-				writeToFile(acsl, filePath + name + ".h");
-			}
+		OclGenerator generator = new OclGenerator();
+		BehaviorOclContractGenerator behaviorGenerator = new BehaviorOclContractGenerator();
+		StubOclContractGenerator stubGenerator = new StubOclContractGenerator();
+		OclContractGenerator.initialize(generator, behaviorGenerator,
+				stubGenerator);
+		AcslGenerator acslGenerator = new AcslGenerator();
+		Ocl2Acsl.initialize(new Ocl2AcslVisitor());
+		// Model parsing
+		ModelParser.parseModel(modelPath);
+		Model model = ModelParser.getModel();
+		for (Activity a : ModelParser.getActivities()) {
+			Operation op = (Operation) a.getSpecification();
+			org.eclipse.uml2.uml.Class module = op.getClass_();
+			OclContractGenerator.prepareModel(model, module);
+			// Activity parsing
+			ActivityParser.parseActivity(a, new NodeParser());
+			ArrayList<Operation> calledOperations = ActivityParser
+					.getCalledOperations();
+			ArrayList<Behavior> behaviors = ActivityParser.getListBehaviors();
+			// Model completion with observers
+			OclContractGenerator.addObserversToModel(model, op,
+					calledOperations);
+			// OCL contract generation
+			GlobalOclContract globalContract = OclContractGenerator
+					.generateFunctionOclContract(calledOperations, behaviors,
+							op);
+			// OCL stub contracts generation
+			OclContractGenerator.generateStubContracts(calledOperations,
+					globalContract, op);
+			String ocl = globalContract.toString();
+			// Translation of OCL contract to ACSL
+			String acsl = acslGenerator.generateFunctionContract(
+					globalContract, a, calledOperations);
+			// Stub generation
+			String stubs = acslGenerator.generateStubs(globalContract, op);
+			String name = a.getName();
+			String filePath = genPath + name + "\\";
+			// Files generation
+			writeToFile(stubs, filePath + name + "_stubs.h");
+			writeToFile(ocl, filePath + name + ".ocl");
+			writeToFile(acsl, filePath + name + ".h");
+		}
 	}
 
 	// Writes content to provided path
@@ -94,8 +94,8 @@ public class Activity2Acsl {
 		file.delete();
 		PrintWriter out = null;
 		try {
-			out = new PrintWriter(new BufferedWriter(
-					new FileWriter(filePath, true)));
+			out = new PrintWriter(new BufferedWriter(new FileWriter(filePath,
+					true)));
 			out.println(content);
 			out.close();
 		} catch (IOException e) {

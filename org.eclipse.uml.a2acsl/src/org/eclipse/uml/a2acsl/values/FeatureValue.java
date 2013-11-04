@@ -12,7 +12,6 @@ public class FeatureValue implements Value {
 	private String feature;
 	private Value source;
 	private String index;
-	private boolean staticAccess;
 
 	/**
 	 * Creates a new FeatureValue
@@ -22,21 +21,10 @@ public class FeatureValue implements Value {
 	 * @param index
 	 * @param staticAccess
 	 */
-	public FeatureValue(String feature, Value source, String index,
-			boolean staticAccess) {
+	public FeatureValue(String feature, Value source, String index) {
 		this.feature = feature;
 		this.source = source;
 		this.index = index;
-		this.staticAccess = staticAccess;
-	}
-
-	/**
-	 * Returns true of the access is to an external feature
-	 * 
-	 * @return
-	 */
-	public boolean isStaticAccess() {
-		return staticAccess;
 	}
 
 	/**

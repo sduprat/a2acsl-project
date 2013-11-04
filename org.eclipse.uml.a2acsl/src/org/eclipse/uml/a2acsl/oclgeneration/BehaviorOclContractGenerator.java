@@ -359,8 +359,7 @@ public class BehaviorOclContractGenerator {
 			Value sourceValue = featureValue.getSource();
 			String result = "";
 			if (sourceValue != null) {
-				result += getValue(sourceValue)
-						+ (featureValue.isStaticAccess() ? "::" : ".");
+				result += getValue(sourceValue) + ".";
 			}
 			result += featureValue.getFeature();
 			String index = featureValue.getIndex();

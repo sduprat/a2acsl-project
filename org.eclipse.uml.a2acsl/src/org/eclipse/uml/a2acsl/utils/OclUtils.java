@@ -55,10 +55,12 @@ public class OclUtils {
 			String stringExp) throws ParserException {
 		try {
 			stringExp = stringExp.replaceAll("@pre", "");
-			OCLExpression<Classifier> expression = helper.createQuery(stringExp);
+			OCLExpression<Classifier> expression = helper
+					.createQuery(stringExp);
 			return expression;
 		} catch (ParserException e) {
-			ParserException e2 = new ParserException(e.getMessage() + " in expression " + stringExp);
+			ParserException e2 = new ParserException(e.getMessage()
+					+ " in expression " + stringExp);
 			e2.setStackTrace(e.getStackTrace());
 			throw e2;
 		}
@@ -80,7 +82,8 @@ public class OclUtils {
 					.getSpecification()).getBodyExpression();
 			return consSpec;
 		} catch (ParserException e) {
-			ParserException e2 = new ParserException(e.getMessage() + " in expression " + stringSpec);
+			ParserException e2 = new ParserException(e.getMessage()
+					+ " in expression " + stringSpec);
 			e2.setStackTrace(e.getStackTrace());
 			throw e2;
 		}

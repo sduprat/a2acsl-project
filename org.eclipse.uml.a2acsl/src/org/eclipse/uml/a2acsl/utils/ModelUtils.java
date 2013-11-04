@@ -63,6 +63,10 @@ public class ModelUtils {
 		newElement.setUpper(element.getUpper());
 		newElement.setIsOrdered(element.isOrdered());
 		newElement.setIsUnique(element.isUnique());
+		if (newElement instanceof Property) {
+			((Property) newElement).setIsReadOnly(((Property) element)
+					.isReadOnly());
+		}
 	}
 
 	/**

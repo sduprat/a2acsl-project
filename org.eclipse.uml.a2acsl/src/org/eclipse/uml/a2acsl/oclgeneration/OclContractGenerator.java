@@ -11,6 +11,7 @@ import org.eclipse.uml.a2acsl.oclcontracts.OclContract;
 import org.eclipse.uml.a2acsl.parsing.ModelParser;
 import org.eclipse.uml.a2acsl.utils.ModelUtils;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.ElementImport;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Operation;
@@ -29,6 +30,7 @@ public class OclContractGenerator {
 	private static OclGenerator generator;
 	private static BehaviorOclContractGenerator behaviorGenerator;
 	private static StubOclContractGenerator stubGenerator;
+	private static ArrayList<Class> updatesClasses;
 
 	/**
 	 * Initializes the generator with an {@link OclGenerator} for OCL syntax
@@ -46,6 +48,7 @@ public class OclContractGenerator {
 		OclContractGenerator.generator = generator;
 		OclContractGenerator.behaviorGenerator = behaviorGenerator;
 		OclContractGenerator.stubGenerator = stubGenerator;
+		updatesClasses = new ArrayList<Class>();
 	}
 
 	/**
@@ -61,6 +64,8 @@ public class OclContractGenerator {
 			ArrayList<Operation> calledOperations,
 			ArrayList<Behavior> behaviors, Operation context)
 			throws ParserException {
+		if (!updatesClasses.contains(context.getClass_()))
+			addExternalProperties(context.getClass_());
 		GlobalOclContract globalContrat = new GlobalOclContract();
 		for (Behavior behavior : behaviors) {
 			behaviorGenerator.initializeGen(generator);
@@ -74,6 +79,20 @@ public class OclContractGenerator {
 					getMaxCallNumber(opName, behaviors));
 		}
 		return globalContrat;
+	}
+
+	private static void addExternalProperties(Class module) {
+		for (ElementImport eImport : module.getElementImports()) {
+			if (eImport.getImportedElement() instanceof Class) {
+				Class imported = (Class) eImport.getImportedElement();
+				for (Property p : imported.getAllAttributes()) {
+					Property newProperty = module.createOwnedAttribute(
+							p.getName(), p.getType());
+					ModelUtils.setProperties(newProperty, p);
+				}
+			}
+		}
+		updatesClasses.add(module);
 	}
 
 	/**

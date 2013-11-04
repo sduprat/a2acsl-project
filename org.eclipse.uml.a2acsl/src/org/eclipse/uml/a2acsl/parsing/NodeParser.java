@@ -16,9 +16,9 @@ import org.eclipse.uml.a2acsl.utils.ModelUtils;
 import org.eclipse.uml.a2acsl.values.FeatureValue;
 import org.eclipse.uml.a2acsl.values.OpaqueValue;
 import org.eclipse.uml.a2acsl.values.ReturnValue;
+import org.eclipse.uml.a2acsl.values.ReturnValue.ReturnType;
 import org.eclipse.uml.a2acsl.values.StringValue;
 import org.eclipse.uml.a2acsl.values.Value;
-import org.eclipse.uml.a2acsl.values.ReturnValue.ReturnType;
 import org.eclipse.uml2.uml.Action;
 import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.ActivityNode;
@@ -30,7 +30,6 @@ import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.ForkNode;
 import org.eclipse.uml2.uml.InputPin;
-import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.ObjectFlow;
 import org.eclipse.uml2.uml.OpaqueAction;
 import org.eclipse.uml2.uml.Operation;
@@ -39,7 +38,6 @@ import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.ReadStructuralFeatureAction;
 import org.eclipse.uml2.uml.ReadVariableAction;
-import org.eclipse.uml2.uml.StructuralFeature;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.ValuePin;
 import org.eclipse.uml2.uml.ValueSpecificationAction;
@@ -236,32 +234,23 @@ public class NodeParser {
 					type);
 			return returnValue;
 		} else if (node instanceof ReadStructuralFeatureAction) {
-			boolean staticAccess = false;
-			Class current = ((Operation) node.getActivity().getSpecification())
-					.getClass_();
-			StructuralFeature sFeature = ((ReadStructuralFeatureAction) node)
-					.getStructuralFeature();
 			InputPin object = ((ReadStructuralFeatureAction) node).getObject();
 			String feature = ((ReadStructuralFeatureAction) node)
 					.getStructuralFeature().getName();
 			Value value = null;
 			if (object != null) {
 				value = parseInputValue(object);
-			} else if (current.getAttribute(sFeature.getName(),
-					sFeature.getType()) == null) {
-				value = new StringValue(
-						((NamedElement) sFeature.getOwner()).getName());
-				staticAccess = ((ReadStructuralFeatureAction) node).getStructuralFeature().isStatic();
 			}
 			String index = "-1";
 			EList<Constraint> pres = ((ReadStructuralFeatureAction) node)
 					.getLocalPreconditions();
 			if (!pres.isEmpty()) {
-				String annots = pres.get(0).getSpecification().stringValue();
-				index = annots.split(" ")[1];
+				String annot = pres.get(0).getSpecification().stringValue();
+				String[] annotParts = annot.split(" ");
+				if (annotParts[0].equals("@index"))
+					index = annotParts[1];
 			}
-			FeatureValue featureValue = new FeatureValue(feature, value, index,
-					staticAccess);
+			FeatureValue featureValue = new FeatureValue(feature, value, index);
 			return featureValue;
 		} else if (node instanceof ReadVariableAction) {
 			String varName = ((ReadVariableAction) node).getVariable()
