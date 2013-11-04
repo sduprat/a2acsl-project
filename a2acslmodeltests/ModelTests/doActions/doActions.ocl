@@ -82,12 +82,12 @@ post:
 --Behavior :B3
 context module::doActions(action:N_Action,it:Integer)
 pre:
-  actions::status = 0 and (action = module::N_Action::A3) implies
+  status@pre = 0 and (action = module::N_Action::A3) implies
 (
   size_doActions_action3_context = 0
 )
 post:
-  actions::status = 0 and (action = module::N_Action::A3) implies
+  status@pre = 0 and (action = module::N_Action::A3) implies
 (
   (doActions_action3_context->at(0))._in.x = 0 and
   (doActions_action3_context->at(1))._in.x = doActions_action3_context->at(0).result and
@@ -98,13 +98,13 @@ post:
 --Behavior :B4
 context module::doActions(action:N_Action,it:Integer)
 pre:
-  actions::status <> 0 and (action = module::N_Action::A3) implies
+  status@pre <> 0 and (action = module::N_Action::A3) implies
 (
   size_doActions_init_context = 0 and
   size_doActions_action1_context = 0
 )
 post:
-  actions::status <> 0 and (action = module::N_Action::A3) implies
+  status@pre <> 0 and (action = module::N_Action::A3) implies
 (
   result = doActions_action1_context->at(0).result
 )
