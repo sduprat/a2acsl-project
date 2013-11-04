@@ -340,11 +340,11 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_y_RfEEVaEeOmZ4-rEHDKdQ" name="module">
     <elementImport xmi:id="_AyGgUEVcEeOmZ4-rEHDKdQ" alias="actions" importedElement="_GeZKMEVbEeOmZ4-rEHDKdQ"/>
-    <ownedAttribute xmi:id="_1JKjwEVaEeOmZ4-rEHDKdQ" name="states" isOrdered="true" isUnique="false">
+    <ownedAttribute xmi:id="_1JKjwEVaEeOmZ4-rEHDKdQ" name="states" type="_6DZpIEVaEeOmZ4-rEHDKdQ" isOrdered="true" isUnique="false">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1JKjwUVaEeOmZ4-rEHDKdQ" value="10"/>
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1JKjwkVaEeOmZ4-rEHDKdQ" value="10"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="_3aBzIEVaEeOmZ4-rEHDKdQ" name="state">
+    <ownedAttribute xmi:id="_3aBzIEVaEeOmZ4-rEHDKdQ" name="state" type="_6DZpIEVaEeOmZ4-rEHDKdQ">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3aBzIUVaEeOmZ4-rEHDKdQ" value="1"/>
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3aBzIkVaEeOmZ4-rEHDKdQ" value="1"/>
     </ownedAttribute>
@@ -362,7 +362,7 @@
     </nestedClassifier>
     <ownedOperation xmi:id="_-LVu4EVaEeOmZ4-rEHDKdQ" name="init"/>
     <ownedOperation xmi:id="_-8Q1gEVaEeOmZ4-rEHDKdQ" name="doActions" method="_-uk84D1ZEeOf-PpITrJ1HA">
-      <ownedParameter xmi:id="_-8Q1gUVaEeOmZ4-rEHDKdQ" name="action"/>
+      <ownedParameter xmi:id="_-8Q1gUVaEeOmZ4-rEHDKdQ" name="action" type="_8VV2kEVaEeOmZ4-rEHDKdQ"/>
       <ownedParameter xmi:id="_-8Q1gkVaEeOmZ4-rEHDKdQ" name="it">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
       </ownedParameter>
