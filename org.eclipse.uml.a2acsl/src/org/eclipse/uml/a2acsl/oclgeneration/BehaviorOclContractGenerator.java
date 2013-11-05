@@ -139,7 +139,6 @@ public class BehaviorOclContractGenerator {
 			String source = getValue(sourceValue);
 			String[] sourceParts = source.split("\\.");
 			modifiedvariable = parseSource(sourceParts[0]);
-			System.out.println(modifiedvariable);
 			TypedElement p = ActivityParser.getElement(modifiedvariable);
 			type = ModelUtils.getType(p);
 			value = generator.generateSetters(sourceParts, node.getFeature(),
