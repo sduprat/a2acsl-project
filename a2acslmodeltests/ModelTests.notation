@@ -1647,6 +1647,9 @@
           <layoutConstraint xmi:type="notation:Location" xmi:id="_9vx-00VbEeOmZ4-rEHDKdQ" x="30" y="30"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_9vyl4EVbEeOmZ4-rEHDKdQ" type="3013" fontName="Segoe UI" lineColor="0">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_93aMYEhyEeOMN9HwbL0WeQ" source="CustomAppearance_Annotation">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_93azcEhyEeOMN9HwbL0WeQ" key="CustomAppearance_MaskValue" value="6922"/>
+          </eAnnotations>
           <element xmi:type="uml:Operation" href="ModelTests.uml#_-8Q1gEVaEeOmZ4-rEHDKdQ"/>
           <layoutConstraint xmi:type="notation:Location" xmi:id="_9vyl4UVbEeOmZ4-rEHDKdQ" x="40" y="40"/>
         </children>
@@ -1687,6 +1690,9 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_-VFEQEVbEeOmZ4-rEHDKdQ" type="7018">
         <children xmi:type="notation:Shape" xmi:id="_-6A9UkVbEeOmZ4-rEHDKdQ" type="3013" fontName="Segoe UI" lineColor="0">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_AgqtoEhzEeOMN9HwbL0WeQ" source="CustomAppearance_Annotation">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_AgrUsEhzEeOMN9HwbL0WeQ" key="CustomAppearance_MaskValue" value="6922"/>
+          </eAnnotations>
           <element xmi:type="uml:Operation" href="ModelTests.uml#_JHGR0EVbEeOmZ4-rEHDKdQ"/>
           <layoutConstraint xmi:type="notation:Location" xmi:id="_-6A9U0VbEeOmZ4-rEHDKdQ" x="20" y="20"/>
         </children>
@@ -1695,6 +1701,9 @@
           <layoutConstraint xmi:type="notation:Location" xmi:id="_-6BkYUVbEeOmZ4-rEHDKdQ" x="30" y="30"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_-6BkYkVbEeOmZ4-rEHDKdQ" type="3013" fontName="Segoe UI" lineColor="0">
+          <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_AxnTsEhzEeOMN9HwbL0WeQ" source="CustomAppearance_Annotation">
+            <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_AxnTsUhzEeOMN9HwbL0WeQ" key="CustomAppearance_MaskValue" value="6922"/>
+          </eAnnotations>
           <element xmi:type="uml:Operation" href="ModelTests.uml#_JHHf8EVbEeOmZ4-rEHDKdQ"/>
           <layoutConstraint xmi:type="notation:Location" xmi:id="_-6BkY0VbEeOmZ4-rEHDKdQ" x="40" y="40"/>
         </children>
@@ -1710,7 +1719,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-VFESUVbEeOmZ4-rEHDKdQ"/>
       </children>
       <element xmi:type="uml:Class" href="ModelTests.uml#_GeZKMEVbEeOmZ4-rEHDKdQ"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-VD2IUVbEeOmZ4-rEHDKdQ" x="545" y="30"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-VD2IUVbEeOmZ4-rEHDKdQ" x="265" y="230"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_CxWbQEVcEeOmZ4-rEHDKdQ" type="2010" fontName="Segoe UI" lineColor="0">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_CxWbQkVcEeOmZ4-rEHDKdQ" source="ShadowFigure">
@@ -1781,12 +1790,12 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_AyIVgUVcEeOmZ4-rEHDKdQ" x="-2" y="14"/>
       </children>
       <children xmi:type="notation:DecorationNode" xmi:id="_AyIVgkVcEeOmZ4-rEHDKdQ" type="6021">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_AyIVg0VcEeOmZ4-rEHDKdQ" x="-7" y="-16"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_AyIVg0VcEeOmZ4-rEHDKdQ" x="-11" y="-36"/>
       </children>
       <styles xmi:type="notation:FontStyle" xmi:id="_AyHucUVcEeOmZ4-rEHDKdQ" fontName="Segoe UI"/>
       <element xmi:type="uml:ElementImport" href="ModelTests.uml#_AyGgUEVcEeOmZ4-rEHDKdQ"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_AyHuckVcEeOmZ4-rEHDKdQ" points="[71, -1, -67, 0]$[95, -1, -43, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AyI8kEVcEeOmZ4-rEHDKdQ" id="(0.8352668213457076,0.5142857142857142)"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AyI8kEVcEeOmZ4-rEHDKdQ" id="(0.890282131661442,0.9809523809523809)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AyI8kUVcEeOmZ4-rEHDKdQ" id="(0.07060755336617405,0.5047619047619047)"/>
     </edges>
   </notation:Diagram>
