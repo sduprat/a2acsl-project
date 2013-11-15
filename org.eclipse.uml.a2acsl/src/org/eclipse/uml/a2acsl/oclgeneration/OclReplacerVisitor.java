@@ -179,16 +179,16 @@ public class OclReplacerVisitor extends OclAbstractVisitor {
 		String name = exp.getName();
 		String body = exp.getBody().accept(this);
 		String source = exp.getSource().accept(this);
-		String result = source + " -> " + name + "(";
+		StringBuffer result = new StringBuffer(source + " -> " + name + "(");
 		EList<Variable<Classifier, Parameter>> its = exp.getIterator();
 		for (Variable<Classifier, Parameter> var : its) {
-			result += var.getName() + ",";
+			result.append(var.getName() + ",");
 		}
 		if (!its.isEmpty()) {
-			result = result.substring(0, result.length() - 1) + " | ";
+			result = new StringBuffer(result.substring(0, result.length() - 1) + " | ");
 		}
-		result += body + ")";
-		return result;
+		result.append(body + ")");
+		return result.toString();
 	}
 
 	@Override
@@ -209,11 +209,11 @@ public class OclReplacerVisitor extends OclAbstractVisitor {
 	public String visitIfExp(IfExp<Classifier> exp) {
 		String cond = exp.getCondition().accept(this);
 		String thenExp = exp.getThenExpression().accept(this);
-		String result = "if " + cond + " then " + thenExp;
+		StringBuffer result = new StringBuffer("if " + cond + " then " + thenExp);
 		if (exp.getElseExpression() != null) {
-			result += " else " + exp.getElseExpression().accept(this);
+			result.append(" else " + exp.getElseExpression().accept(this));
 		}
-		result += " endif";
-		return result;
+		result.append(" endif");
+		return result.toString();
 	}
 }

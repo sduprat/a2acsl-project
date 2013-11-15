@@ -66,14 +66,14 @@ public class GlobalOclContract {
 
 	@Override
 	public String toString() {
-		String result = "";
+		StringBuffer result = new StringBuffer();
 		for (OclContract stub : stubs) {
-			result += stub.toString();
+			result.append(stub.toString());
 		}
 		for (OclContract behavior : behaviors) {
-			result += behavior.toString();
+			result.append(behavior.toString());
 		}
-		return result;
+		return result.toString();
 	}
 
 	/**

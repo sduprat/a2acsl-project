@@ -357,31 +357,31 @@ public class BehaviorOclContractGenerator {
 		if (input instanceof FeatureValue) {
 			FeatureValue featureValue = (FeatureValue) input;
 			Value sourceValue = featureValue.getSource();
-			String result = "";
+			StringBuffer result = new StringBuffer();
 			if (sourceValue != null) {
-				result += getValue(sourceValue) + ".";
+				result.append(getValue(sourceValue) + ".");
 			}
-			result += featureValue.getFeature();
+			result.append(featureValue.getFeature());
 			String index = featureValue.getIndex();
 			if (!index.equals("-1")) {
-				result = generator.generateAt(result, index);
+				result = new StringBuffer(generator.generateAt(result.toString(), index));
 			}
-			return result;
+			return result.toString();
 		}
 		if (input instanceof OpaqueValue) {
 			OpaqueValue opaqueValue = (OpaqueValue) input;
-			String result = "";
+			StringBuffer result = new StringBuffer();
 			for (String in : opaqueValue.getInputs().keySet()) {
 				String value = getValue(opaqueValue.getInputs().get(in));
 				String type = opaqueValue.getTypes().get(in);
-				result += generator.generateLet(in, type, value);
+				result.append(generator.generateLet(in, type, value));
 			}
 			String output = opaqueValue.getOutput();
 			String type = opaqueValue.getTypes().get(output);
 			String value = opaqueValue.getConstraint().split("=")[1].trim();
-			result += generator.generateLet(output, type, value);
-			result += output;
-			return result;
+			result.append(generator.generateLet(output, type, value));
+			result.append(output);
+			return result.toString();
 		}
 		return null;
 	}

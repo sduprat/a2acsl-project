@@ -112,53 +112,53 @@ public class OclContract {
 
 	@Override
 	public String toString() {
-		String result = name.isEmpty() ? "--Called Operation Contract\n"
-				: "--Behavior :" + name + "\n";
+		StringBuffer result = new StringBuffer(name.isEmpty() ? "--Called Operation Contract\n"
+				: "--Behavior :" + name + "\n");
 		String signature = (new OclGenerator())
 				.generateOperationSignature(context);
-		result += "context " + signature + "\n";
+		result.append("context " + signature + "\n");
 		if (assigns.size() != 0) {
-			result += "--Modifies :";
+			result.append("--Modifies :");
 			for (String assign : assigns) {
-				result += assign + ", ";
+				result.append(assign + ", ");
 			}
-			result = result.substring(0, result.length() - 2) + "\n";
+			result = new StringBuffer(result.substring(0, result.length() - 2) + "\n");
 		}
 		if (preconditions.size() != 0) {
-			result += "pre:\n";
+			result.append("pre:\n");
 			if (assumptions.size() != 0) {
 				for (String assumption : assumptions) {
-					result += "  " + assumption + " and\n";
+					result.append("  " + assumption + " and\n");
 				}
-				result = result.substring(0, result.length() - 5)
-						+ " implies\n(\n";
+				result.append(result.substring(0, result.length() - 5)
+						+ " implies\n(\n");
 			}
 			for (String precondition : preconditions) {
-				result += "  " + precondition + " and\n";
+				result.append("  " + precondition + " and\n");
 			}
-			result = result.substring(0, result.length() - 5) + "\n";
+			result = new StringBuffer(result.substring(0, result.length() - 5) + "\n");
 			if (assumptions.size() != 0) {
-				result += ")\n";
+				result.append(")\n");
 			}
 		}
 		if (postconditions.size() != 0) {
-			result += "post:\n";
+			result.append("post:\n");
 			if (assumptions.size() != 0) {
 				for (String assumption : assumptions) {
-					result += "  " + assumption + " and\n";
+					result.append("  " + assumption + " and\n");
 				}
-				result = result.substring(0, result.length() - 5)
-						+ " implies\n(\n";
+				result = new StringBuffer(result.substring(0, result.length() - 5)
+						+ " implies\n(\n");
 			}
 			for (String postcondition : postconditions) {
-				result += "  " + postcondition + " and\n";
+				result.append("  " + postcondition + " and\n");
 			}
-			result = result.substring(0, result.length() - 5) + "\n";
+			result = new StringBuffer(result.substring(0, result.length() - 5) + "\n");
 			if (assumptions.size() != 0) {
-				result += ")\n";
+				result.append(")\n");
 			}
 		}
-		return result + "\n";
+		return result.toString() + "\n";
 	}
 
 	/**

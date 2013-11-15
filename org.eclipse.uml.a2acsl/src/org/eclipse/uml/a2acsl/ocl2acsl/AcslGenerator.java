@@ -28,15 +28,15 @@ public class AcslGenerator {
 	public String generateFunctionContract(GlobalOclContract contract,
 			Activity activity, ArrayList<Operation> calledOperations)
 			throws ParserException {
-		String result = "";
+		StringBuffer result = new StringBuffer();
 		ArrayList<OclContract> behaviors = contract.getBehaviors();
-		result += "/* ========== Function Contract ========== */\n/*@\n";
+		result.append("/* ========== Function Contract ========== */\n/*@\n");
 		// For each beahvior, translates ocl contract to acsl
 		for (OclContract behaviorContract : behaviors) {
-			result += oclContractToACSL(behaviorContract);
+			result.append(oclContractToACSL(behaviorContract));
 		}
-		result += "*/\n\n";
-		return result;
+		result.append("*/\n\n");
+		return result.toString();
 	}
 
 	/**
@@ -49,35 +49,36 @@ public class AcslGenerator {
 	 */
 	public String generateStubs(GlobalOclContract contract, Operation caller)
 			throws ParserException {
-		String result = "";
+		StringBuffer result = new StringBuffer();
 		ArrayList<OclContract> stubs = contract.getStubs();
 		for (OclContract stub : stubs) {
 			Operation operation = stub.getContext();
 			String opName = operation.getName();
-			result += "/* ========== Annotations for called operation "
-					+ opName + " ========== */\n";
+			result.append("/* ========== Annotations for called operation "
+					+ opName + " ========== */\n");
 			// Generates C structures describing observers
-			result += "/* ========== Definition of observers structure ========== */\n"
+			result.append("/* ========== Definition of observers structure ========== */\n"
 					+ CGenerator.generateOperationContextStruct(operation)
-					+ "\n\n";
+					+ "\n\n");
 			// Genrates ghost instructions for observers declarations
-			result += "/* ========== Declaration of context observers ========== */\n"
+			result.append("/* ========== Declaration of context observers ========== */\n"
 					+ generateGhostInstructions(caller.getName(), opName,
-							contract.getMaxNbCall(opName)) + "\n";
+							contract.getMaxNbCall(opName)) + "\n");
 			// Translates stub annotations
-			result += "/* ========== Stub annotations ========== */\n"
-					+ translateStubAnnotations(stub) + "\n\n";
+			result.append("/* ========== Stub annotations ========== */\n"
+					+ translateStubAnnotations(stub) + "\n\n");
 		}
-		return result;
+		return result.toString();
 	}
 
 	private String generateGhostInstructions(String caller, String callee,
 			int nbCalls) {
-		String result = "/*@ ghost int size_" + caller + "_" + callee
-				+ "_context;*/\n";
-		result += "/*@ ghost " + callee + "_context " + caller + "_" + callee
-				+ "_context[" + nbCalls + "];*/\n";
-		return result;
+		StringBuffer result = new StringBuffer();
+		result.append("/*@ ghost int size_" + caller + "_" + callee
+				+ "_context;*/\n");
+		result.append("/*@ ghost " + callee + "_context " + caller + "_" + callee
+				+ "_context[" + nbCalls + "];*/\n");
+		return result.toString();
 	}
 
 	protected String translateStubAnnotations(OclContract stub)
@@ -89,33 +90,33 @@ public class AcslGenerator {
 	protected String oclContractToACSL(OclContract contract)
 			throws ParserException {
 		String name = contract.getName();
-		String result = name.isEmpty() ? "" : "behavior " + name + ":\n";
+		StringBuffer result = new StringBuffer(name.isEmpty() ? "" : "behavior " + name + ":\n");
 		if (contract.getAssigns().size() != 0) {
-			result += "	assigns ";
+			result.append("	assigns ");
 		}
 		for (String assign : contract.getAssigns()) {
 			String translation = Ocl2Acsl.oclExpression2acsl(assign,
 					contract.getContext(), true);
-			result += translation + ", ";
+			result.append(translation + ", ");
 		}
 		if (contract.getAssigns().size() != 0) {
-			result = result.substring(0, result.length() - 2) + ";\n";
+			result = new StringBuffer(result.substring(0, result.length() - 2) + ";\n");
 		}
 		for (String assumption : contract.getAssumptions()) {
 			String translation = Ocl2Acsl.oclConstraint2acsl(assumption,
 					contract.getContext(), true);
-			result += "	assumes " + translation + ";\n";
+			result.append("	assumes " + translation + ";\n");
 		}
 		for (String precondition : contract.getPreconditions()) {
 			String translation = Ocl2Acsl.oclConstraint2acsl(precondition,
 					contract.getContext(), true);
-			result += "	requires " + translation + ";\n";
+			result.append("	requires " + translation + ";\n");
 		}
 		for (String postcondition : contract.getPostconditions()) {
 			String translation = Ocl2Acsl.oclConstraint2acsl(postcondition,
 					contract.getContext(), false);
-			result += "	ensures " + translation + ";\n";
+			result.append("	ensures " + translation + ";\n");
 		}
-		return result;
+		return result.toString();
 	}
 }

@@ -84,14 +84,14 @@ public class OclGenerator {
 	 * @return
 	 */
 	public String generateDefinitions(ArrayList<VariableDefinition> definitions) {
-		String result = "";
+		StringBuffer result = new StringBuffer();
 		for (VariableDefinition def : definitions) {
 			String var = def.getName();
 			String type = def.getType();
 			String value = def.getExpression();
-			result += generateLet(var, type, value);
+			result.append(generateLet(var, type, value));
 		}
-		return result;
+		return result.toString();
 	}
 
 	/**
@@ -150,11 +150,11 @@ public class OclGenerator {
 		if (l == 1)
 			return generateSetter(parts[0], feature, value, partsTypes[0]);
 		;
-		String var = parts[0];
+		StringBuffer var = new StringBuffer(parts[0]);
 		for (int i = 1; i < l; i++) {
-			var += "." + parts[i];
+			var.append("." + parts[i]);
 		}
-		String lastValue = generateSetter(var, feature, value, partsTypes[0]);
+		String lastValue = generateSetter(var.toString(), feature, value, partsTypes[0]);
 		String[] newParts = new String[l - 1];
 		for (int i = 0; i < l - 1; i++) {
 			newParts[i] = parts[i];
@@ -173,22 +173,22 @@ public class OclGenerator {
 	 * @return
 	 */
 	public String generateOperationSignature(Operation operation) {
-		String signature = operation.getClass_().getName() + "::"
-				+ operation.getName() + "(";
+		StringBuffer signature = new StringBuffer(operation.getClass_().getName() + "::"
+				+ operation.getName() + "(");
 		EList<Parameter> params = operation.getOwnedParameters();
 		int nbParams = 0;
 		for (Parameter p : params) {
 			if (p.getDirection() != ParameterDirectionKind.RETURN_LITERAL) {
-				signature += p.getName() + ":"
-						+ ModelUtils.getType(p).getName() + ",";
+				signature.append(p.getName() + ":"
+						+ ModelUtils.getType(p).getName() + ",");
 				nbParams++;
 			}
 		}
 		if (nbParams != 0) {
-			signature = signature.substring(0, signature.length() - 1);
+			signature = new StringBuffer(signature.substring(0, signature.length() - 1));
 		}
-		signature += ")";
-		return signature;
+		signature.append(")");
+		return signature.toString();
 	}
 
 	/**

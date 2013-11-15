@@ -26,12 +26,12 @@ class CGenerator {
 	 */
 	public static String generateOperationContextStruct(Operation operation) {
 		String callee = operation.getName();
-		String result = "typedef struct _" + callee + "_context {\n";
-		result += generateInStruct(operation);
-		result += generateOutStruct(operation);
-		result += generateResultField(operation);
-		result += "}" + callee + "_context;";
-		return result;
+		StringBuffer result = new StringBuffer("typedef struct _" + callee + "_context {\n");
+		result.append(generateInStruct(operation));
+		result.append(generateOutStruct(operation));
+		result.append(generateResultField(operation));
+		result.append("}" + callee + "_context;");
+		return result.toString();
 	}
 
 	/**
@@ -41,23 +41,23 @@ class CGenerator {
 	 * @return
 	 */
 	public static String generateInStruct(Operation operation) {
-		String result = "";
+		StringBuffer result = new StringBuffer();
 		ArrayList<Property> properties = ModelUtils.getSideEffects(operation);
 		ArrayList<Parameter> inParams = ModelUtils.getParameters(operation,
 				ParameterDirectionKind.IN_LITERAL);
 		if (inParams.size() != 0 || properties.size() != 0) {
-			result = "	struct{\n";
+			result.append("	struct{\n");
 		}
 		for (Parameter p : inParams) {
-			result += "		" + generateDeclaration(p, false) + ";\n";
+			result.append("		" + generateDeclaration(p, false) + ";\n");
 		}
 		for (Property p : properties) {
-			result += "		" + generateDeclaration(p) + ";\n";
+			result.append("		" + generateDeclaration(p) + ";\n");
 		}
 		if (inParams.size() != 0 || properties.size() != 0) {
-			result += "	} _in;\n";
+			result.append("	} _in;\n");
 		}
-		return result;
+		return result.toString();
 	}
 
 	/**
@@ -67,23 +67,23 @@ class CGenerator {
 	 * @return
 	 */
 	public static String generateOutStruct(Operation operation) {
-		String result = "";
+		StringBuffer result = new StringBuffer();
 		ArrayList<Property> properties = ModelUtils.getSideEffects(operation);
 		ArrayList<Parameter> outParams = ModelUtils.getParameters(operation,
 				ParameterDirectionKind.OUT_LITERAL);
 		if (outParams.size() != 0 || properties.size() != 0) {
-			result = "	struct{\n";
+			result.append("	struct{\n");
 		}
 		for (Parameter p : outParams) {
-			result += "		" + generateDeclaration(p, false) + ";\n";
+			result.append("		" + generateDeclaration(p, false) + ";\n");
 		}
 		for (Property p : properties) {
-			result += "		" + generateDeclaration(p) + ";\n";
+			result.append("		" + generateDeclaration(p) + ";\n");
 		}
 		if (outParams.size() != 0 || properties.size() != 0) {
-			result += "	} _out;\n";
+			result.append("	} _out;\n");
 		}
-		return result;
+		return result.toString();
 	}
 
 	/**
@@ -93,12 +93,11 @@ class CGenerator {
 	 * @return
 	 */
 	public static String generateResultField(Operation operation) {
-		String result = "";
 		Parameter p = operation.getReturnResult();
 		if (p != null) {
-			result += "		" + generateDeclaration(p, false) + ";\n";
+			return "		" + generateDeclaration(p, false) + ";\n";
 		}
-		return result;
+		return null;
 	}
 
 	/**
