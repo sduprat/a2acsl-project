@@ -154,7 +154,8 @@ public class OclGenerator {
 		for (int i = 1; i < l; i++) {
 			var.append("." + parts[i]);
 		}
-		String lastValue = generateSetter(var.toString(), feature, value, partsTypes[0]);
+		String lastValue = generateSetter(var.toString(), feature, value,
+				partsTypes[0]);
 		String[] newParts = new String[l - 1];
 		for (int i = 0; i < l - 1; i++) {
 			newParts[i] = parts[i];
@@ -173,8 +174,8 @@ public class OclGenerator {
 	 * @return
 	 */
 	public String generateOperationSignature(Operation operation) {
-		StringBuffer signature = new StringBuffer(operation.getClass_().getName() + "::"
-				+ operation.getName() + "(");
+		StringBuffer signature = new StringBuffer(operation.getClass_()
+				.getName() + "::" + operation.getName() + "(");
 		EList<Parameter> params = operation.getOwnedParameters();
 		int nbParams = 0;
 		for (Parameter p : params) {
@@ -185,7 +186,8 @@ public class OclGenerator {
 			}
 		}
 		if (nbParams != 0) {
-			signature = new StringBuffer(signature.substring(0, signature.length() - 1));
+			signature = new StringBuffer(signature.substring(0,
+					signature.length() - 1));
 		}
 		signature.append(")");
 		return signature.toString();

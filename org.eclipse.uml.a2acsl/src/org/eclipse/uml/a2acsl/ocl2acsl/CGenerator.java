@@ -26,7 +26,8 @@ class CGenerator {
 	 */
 	public static String generateOperationContextStruct(Operation operation) {
 		String callee = operation.getName();
-		StringBuffer result = new StringBuffer("typedef struct _" + callee + "_context {\n");
+		StringBuffer result = new StringBuffer("typedef struct _" + callee
+				+ "_context {\n");
 		result.append(generateInStruct(operation));
 		result.append(generateOutStruct(operation));
 		result.append(generateResultField(operation));
@@ -97,7 +98,7 @@ class CGenerator {
 		if (p != null) {
 			return "		" + generateDeclaration(p, false) + ";\n";
 		}
-		return null;
+		return "";
 	}
 
 	/**

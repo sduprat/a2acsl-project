@@ -76,8 +76,8 @@ public class AcslGenerator {
 		StringBuffer result = new StringBuffer();
 		result.append("/*@ ghost int size_" + caller + "_" + callee
 				+ "_context;*/\n");
-		result.append("/*@ ghost " + callee + "_context " + caller + "_" + callee
-				+ "_context[" + nbCalls + "];*/\n");
+		result.append("/*@ ghost " + callee + "_context " + caller + "_"
+				+ callee + "_context[" + nbCalls + "];*/\n");
 		return result.toString();
 	}
 
@@ -90,7 +90,8 @@ public class AcslGenerator {
 	protected String oclContractToACSL(OclContract contract)
 			throws ParserException {
 		String name = contract.getName();
-		StringBuffer result = new StringBuffer(name.isEmpty() ? "" : "behavior " + name + ":\n");
+		StringBuffer result = new StringBuffer(name.isEmpty() ? ""
+				: "behavior " + name + ":\n");
 		if (contract.getAssigns().size() != 0) {
 			result.append("	assigns ");
 		}
@@ -100,7 +101,8 @@ public class AcslGenerator {
 			result.append(translation + ", ");
 		}
 		if (contract.getAssigns().size() != 0) {
-			result = new StringBuffer(result.substring(0, result.length() - 2) + ";\n");
+			result = new StringBuffer(result.substring(0, result.length() - 2)
+					+ ";\n");
 		}
 		for (String assumption : contract.getAssumptions()) {
 			String translation = Ocl2Acsl.oclConstraint2acsl(assumption,

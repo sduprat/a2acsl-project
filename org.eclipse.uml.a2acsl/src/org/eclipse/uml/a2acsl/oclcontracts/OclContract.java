@@ -112,8 +112,9 @@ public class OclContract {
 
 	@Override
 	public String toString() {
-		StringBuffer result = new StringBuffer(name.isEmpty() ? "--Called Operation Contract\n"
-				: "--Behavior :" + name + "\n");
+		StringBuffer result = new StringBuffer(
+				name.isEmpty() ? "--Called Operation Contract\n"
+						: "--Behavior :" + name + "\n");
 		String signature = (new OclGenerator())
 				.generateOperationSignature(context);
 		result.append("context " + signature + "\n");
@@ -122,7 +123,8 @@ public class OclContract {
 			for (String assign : assigns) {
 				result.append(assign + ", ");
 			}
-			result = new StringBuffer(result.substring(0, result.length() - 2) + "\n");
+			result = new StringBuffer(result.substring(0, result.length() - 2)
+					+ "\n");
 		}
 		if (preconditions.size() != 0) {
 			result.append("pre:\n");
@@ -130,13 +132,14 @@ public class OclContract {
 				for (String assumption : assumptions) {
 					result.append("  " + assumption + " and\n");
 				}
-				result.append(result.substring(0, result.length() - 5)
+				result = new StringBuffer(result.substring(0, result.length() - 5)
 						+ " implies\n(\n");
 			}
 			for (String precondition : preconditions) {
 				result.append("  " + precondition + " and\n");
 			}
-			result = new StringBuffer(result.substring(0, result.length() - 5) + "\n");
+			result = new StringBuffer(result.substring(0, result.length() - 5)
+					+ "\n");
 			if (assumptions.size() != 0) {
 				result.append(")\n");
 			}
@@ -147,13 +150,14 @@ public class OclContract {
 				for (String assumption : assumptions) {
 					result.append("  " + assumption + " and\n");
 				}
-				result = new StringBuffer(result.substring(0, result.length() - 5)
-						+ " implies\n(\n");
+				result = new StringBuffer(result.substring(0,
+						result.length() - 5) + " implies\n(\n");
 			}
 			for (String postcondition : postconditions) {
 				result.append("  " + postcondition + " and\n");
 			}
-			result = new StringBuffer(result.substring(0, result.length() - 5) + "\n");
+			result = new StringBuffer(result.substring(0, result.length() - 5)
+					+ "\n");
 			if (assumptions.size() != 0) {
 				result.append(")\n");
 			}

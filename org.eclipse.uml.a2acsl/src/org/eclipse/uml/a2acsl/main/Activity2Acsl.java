@@ -106,11 +106,11 @@ public class Activity2Acsl {
 			}
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		try {
 			Activity2Acsl.generateACSLContracts(new File(
-							"D:\\documents\\A560169\\workspace\\a2acslmodeltests\\ModelTests.uml"));
+					"D:\\documents\\A560169\\workspace\\Tests\\model.uml"));
 		} catch (ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

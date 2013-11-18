@@ -285,9 +285,15 @@ public class BehaviorOclContractGenerator {
 					value);
 			contract.addPostcondition(appendDefinitions(postcondition));
 		}
-		// Constraints expressing operation side effects
 		for (Property p : node.getSideEffects()) {
 			String variable = p.getName();
+			// Constraint on value of variable before execution
+			String postcondition = OclReplacer
+					.updateVariablesInConstraint(generator.generateEquality(
+							variable, generator.generateIn(variable, contexts,
+									callCounter + "")));
+			contract.addPostcondition(appendDefinitions(postcondition));
+			// Update variable observer
 			Type type = ModelUtils.getType(p);
 			String replaced = OclReplacer.updateVariablesInExpression(generator
 					.generateOut(variable, contexts, callCounter + ""));
@@ -364,7 +370,8 @@ public class BehaviorOclContractGenerator {
 			result.append(featureValue.getFeature());
 			String index = featureValue.getIndex();
 			if (!index.equals("-1")) {
-				result = new StringBuffer(generator.generateAt(result.toString(), index));
+				result = new StringBuffer(generator.generateAt(
+						result.toString(), index));
 			}
 			return result.toString();
 		}

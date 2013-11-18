@@ -185,7 +185,8 @@ public class OclReplacerVisitor extends OclAbstractVisitor {
 			result.append(var.getName() + ",");
 		}
 		if (!its.isEmpty()) {
-			result = new StringBuffer(result.substring(0, result.length() - 1) + " | ");
+			result = new StringBuffer(result.substring(0, result.length() - 1)
+					+ " | ");
 		}
 		result.append(body + ")");
 		return result.toString();
@@ -209,7 +210,8 @@ public class OclReplacerVisitor extends OclAbstractVisitor {
 	public String visitIfExp(IfExp<Classifier> exp) {
 		String cond = exp.getCondition().accept(this);
 		String thenExp = exp.getThenExpression().accept(this);
-		StringBuffer result = new StringBuffer("if " + cond + " then " + thenExp);
+		StringBuffer result = new StringBuffer("if " + cond + " then "
+				+ thenExp);
 		if (exp.getElseExpression() != null) {
 			result.append(" else " + exp.getElseExpression().accept(this));
 		}
