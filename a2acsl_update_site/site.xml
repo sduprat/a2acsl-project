@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.uml.a2acsl.feature_1.0.0.201311151348.jar" id="org.eclipse.uml.a2acsl.feature" version="1.0.0.201311151348">
+   <feature url="features/org.eclipse.uml.a2acsl.feature_1.0.0.201311181411.jar" id="org.eclipse.uml.a2acsl.feature" version="1.0.0.201311181411">
       <category name="a2acsl_feature"/>
    </feature>
    <category-def name="a2acsl_feature" label="A2Acsl plug-in"/>
