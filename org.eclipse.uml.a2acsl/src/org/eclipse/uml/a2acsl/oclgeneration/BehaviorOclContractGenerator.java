@@ -242,6 +242,7 @@ public class BehaviorOclContractGenerator {
 		String variable = node.getVariable();
 		Type type = node.getType();
 		String value = getValue(node.getValue());
+		
 		value = OclReplacer.updateVariablesInExpression(value);
 		updateDefinitions(variable, type, value, true);
 	}
