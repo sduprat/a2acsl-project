@@ -20,7 +20,7 @@ public class Setter implements CustomOperation {
 
 	private UMLOCLStandardLibrary oclLib = new UMLOCLStandardLibrary();
 
-	@Override
+	//@Override
 	public List<Variable<Classifier, Parameter>> getParameters() {
 		List<Variable<Classifier, Parameter>> params = new ArrayList<Variable<Classifier, Parameter>>();
 		Variable<Classifier, Parameter> objVar = ExpressionsFactory.eINSTANCE
@@ -41,17 +41,17 @@ public class Setter implements CustomOperation {
 		return params;
 	}
 
-	@Override
+	//@Override
 	public Classifier getType() {
 		return oclLib.getOclAny();
 	}
 
-	@Override
+	//@Override
 	public Classifier getClassifier() {
 		return oclLib.getOclAny();
 	}
 
-	@Override
+	//@Override
 	public String getName() {
 		return "ocl_set";
 	}
