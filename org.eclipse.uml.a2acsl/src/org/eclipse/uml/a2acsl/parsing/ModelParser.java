@@ -1,8 +1,12 @@
 package org.eclipse.uml.a2acsl.parsing;
 
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.osgi.framework.Bundle;
+
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -29,8 +33,6 @@ import org.eclipse.uml2.uml.resource.UMLResource;
  */
 public class ModelParser {
 
-	private static URI PLUGIN_PATH = URI
-			.createURI("jar:file:/D:/Topcased-5.3.1/plugins/org.eclipse.uml2.uml.resources_3.1.100.v201008191510.jar!/libraries/");
 	private static ResourceSet resourceSet;
 
 	private static ArrayList<Activity> activities;
@@ -40,6 +42,7 @@ public class ModelParser {
 	private static void initialize() {
 
 		resourceSet = new ResourceSetImpl();
+		if (! Platform.isRunning()){
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
 				.put(UMLResource.FILE_EXTENSION, UMLResource.Factory.INSTANCE);
 		resourceSet.getPackageRegistry().put(UMLPackage.eNS_URI,
@@ -60,8 +63,17 @@ public class ModelParser {
 				InteractionsPackage.eINSTANCE);
 		resourceSet.getPackageRegistry().put(BlocksPackage.eNS_URI,
 				BlocksPackage.eINSTANCE);
+		
+		
+		Bundle b = Platform.getBundle("org.eclipse.uml2.uml.resources");
+				String base = b.getLocation();
+		//TODO the case where the module is not stored in a jar file
+		base = base.replaceFirst("reference:", "jar:");
+		String path = base + "!/libraries/";
+		URI PLUGIN_PATH = URI.createURI(path) ;
 		resourceSet.getURIConverter().getURIMap()
 				.put(URI.createURI("pathmap://UML_LIBRARIES/"), PLUGIN_PATH);
+		}
 		activities = new ArrayList<Activity>();
 		operations = new ArrayList<Operation>();
 	}
